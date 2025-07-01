@@ -27,7 +27,7 @@ The AMI already includes:
 - Code base and test data in <code>/home/ec2-user/cloud-batch-scheduling-sa</code>
 
 Navigate to the working directory and run:
-"""
+'''
 cd ~/cloud-batch-scheduling-sa
 python3 sa_core/main_SA.py
-"""
+'''
