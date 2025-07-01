@@ -16,5 +16,4 @@ Name the instance sa-optimizer
 
 ### 2.2 Connect to the Instance
 
-<code>ssh -i /path/to/key.pem ec2-user@<your-ec2-ip><code>
-
+<code>ssh -i /path/to/key.pem ec2-user@<your-ec2-ip></code>
