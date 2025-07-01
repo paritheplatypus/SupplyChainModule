@@ -25,7 +25,7 @@ By the end of this lab, you will:
 
 ### 1.4 Key References
 
-- Simulated Annealing: [https://en.wikipedia.org/wiki/Simulated_annealing]
-- Q-learning: [https://en.wikipedia.org/wiki/Q-learning]
-- GitHub Actions: [https://docs.github.com/en/actions]
-- AWS EC2: [https://docs.aws.amazon.com/ec2]
+- Simulated Annealing: https://en.wikipedia.org/wiki/Simulated_annealing
+- Q-learning: https://en.wikipedia.org/wiki/Q-learning
+- GitHub Actions: https://docs.github.com/en/actions
+- AWS EC2: https://docs.aws.amazon.com/ec2
