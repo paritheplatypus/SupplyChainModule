@@ -17,3 +17,17 @@ Name the instance sa-optimizer
 ### 2.2 Connect to the Instance
 
 <code>ssh -i /path/to/key.pem ec2-user@<your-ec2-ip></code>
+
+### 2.3 Verify Environment
+
+The AMI already includes:
+
+- Python 3.10
+- Required Python libraries (<code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>openpyxl</code>)
+- Code base and test data in <code>/home/ec2-user/cloud-batch-scheduling-sa</code>
+
+Navigate to the working directory and run:
+"""
+cd ~/cloud-batch-scheduling-sa
+python3 sa_core/main_SA.py
+"""
