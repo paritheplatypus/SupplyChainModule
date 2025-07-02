@@ -10,8 +10,6 @@ In this chapter, you will:
 
 This prepares you for workflow automation in later chapters.
 
----
-
 ## 2.2 Launch Your EC2 Instance
 
 Follow these steps to launch the cloud environment where your optimization and orchestration will run.
