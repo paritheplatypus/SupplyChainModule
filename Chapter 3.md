@@ -70,7 +70,7 @@ Change max_iterations from 200 to 100
 
 Save and rerun the script
 
-<Reflect: Does the output cost change significantly? How fast does the optimizer converge now?>
+> Reflect: Does the output cost change significantly? How fast does the optimizer converge now?
 
 ## 3.5 Task: Add Logging for Objective Value
 Still in <code>main_SA.py</code>, add this line inside the inner iteration loop:
