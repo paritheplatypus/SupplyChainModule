@@ -49,3 +49,49 @@ After completion, check that a results file was created:
 ```
 ls SA_results*.xlsx
 ```
+
+## 3.4 Task: Modify Optimization Parameters
+Open the script:
+```
+nano sa_core/main_SA.py
+```
+Find and edit these lines:
+```
+Tmin = 1
+Tmax = 1000
+cooling_rate = 0.99
+max_iterations = 200
+```
+
+✅ Your Tasks:
+Change Tmax from 1000 to 500
+
+Change max_iterations from 200 to 100
+
+Save and rerun the script
+
+<Reflect: Does the output cost change significantly? How fast does the optimizer converge now?>
+
+## 3.5 Task: Add Logging for Objective Value
+Still in <code>main_SA.py</code>, add this line inside the inner iteration loop:
+
+```
+if iteration % 25 == 0:
+    print(f"[LOG] Iteration {iteration} — Current Best: {best_objective}")
+```
+This will help you track progress and convergence speed during execution.
+
+## 3.6 Review the Excel Output
+Transfer the output Excel file to your local machine (optional), or open it using pandas in Python:
+
+```
+import pandas as pd
+df = pd.read_excel("SA_results123.xlsx", sheet_name="Best_Job_Completion_Time")
+print(df.head())
+```
+
+Sheets include:
+
+- Best_Job_Completion_Time
+- Best_Batch_Volume, Best_Batch_Height
+- Best_Objective, Best_Rejection_Cost, etc.
