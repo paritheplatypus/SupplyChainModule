@@ -16,7 +16,7 @@ To automate and scale this process, we will deploy our scheduling algorithm in t
 - **AWS EC2** as the compute platform
 - **Apache Airflow** to orchestrate and automate the optimization
 
----
+
 
 ## 1.2 Learning Objectives
 
@@ -27,7 +27,7 @@ By the end of this module, you will:
 - Automate and monitor scheduling runs using Apache Airflow DAGs
 - Analyze output cost breakdown and compare scheduling strategies
 
----
+
 
 ## 1.3 Problem Statement: Why Optimize Scheduling?
 
@@ -44,7 +44,7 @@ By optimizing:
 
 This lab simulates exactly this — but in a **controlled, cloud-based environment**.
 
----
+
 
 ## 1.4 What Is Simulated Annealing?
 
@@ -62,7 +62,7 @@ In our case, SA will attempt to minimize a cost function that includes:
 - Rejection costs
 - Unused capacity
 
----
+
 
 ## 1.5 What Is a DAG in Airflow?
 
@@ -76,7 +76,7 @@ You will write a **simple DAG** to:
 - Archive or push output files
 - Schedule runs periodically
 
----
+
 
 ## 1.6 Tools and Technologies
 
@@ -88,7 +88,7 @@ You will write a **simple DAG** to:
 | Apache Airflow     | Automates and schedules workflow runs |
 | Excel              | Stores final job schedule and cost breakdowns |
 
----
+
 
 ## 1.7 Pre-requisites
 
@@ -101,7 +101,7 @@ Before starting, make sure you:
   - AWS EC2 interface
 - Are familiar with GitHub (recommended, not required)
 
----
+
 
 ## 1.8 Module Deliverables
 
