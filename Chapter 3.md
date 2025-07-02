@@ -40,11 +40,9 @@ python3 sa_core/main_SA.py
 
 You should see console logs for:
 
-Initial solution cost
-
-Iterative improvements
-
-Final best objective value
+- Initial solution cost
+- Iterative improvements
+- Final best objective value
 
 After completion, check that a results file was created:
 
