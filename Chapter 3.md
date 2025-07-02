@@ -63,12 +63,9 @@ cooling_rate = 0.99
 max_iterations = 200
 ```
 
-✅ Your Tasks:
-Change Tmax from 1000 to 500
-
-Change max_iterations from 200 to 100
-
-Save and rerun the script
+- Change Tmax from 1000 to 500
+- Change max_iterations from 200 to 100
+- Save and rerun the script
 
 > Reflect: Does the output cost change significantly? How fast does the optimizer converge now?
 
