@@ -14,7 +14,7 @@ This chapter builds your understanding of what the SA script is doing before we 
 
 Inside your project directory (`~/cloud-batch-scheduling-sa`), you'll find:
 
-### 🔹 `sa_core/`
+#### `sa_core/`
 Contains all core logic for the SA optimizer:
 - `main_SA.py` – main execution script
 - `initial_solution.py` – generates starting job assignments
@@ -23,10 +23,10 @@ Contains all core logic for the SA optimizer:
 - `export_SA_results.py` – writes results to Excel
 - `feasibility.py` and helpers – enforce constraints
 
-### 🔹 `data/`
+#### `data/`
 May contain Excel input files if needed (`results69.xlsx`).
 
-### 🔹 `SA_results*.xlsx`
+#### `SA_results*.xlsx`
 Created when `main_SA.py` is executed — this file contains output schedules and cost data.
 
 ## 3.3 Running the Optimizer Script
