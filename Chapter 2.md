@@ -1,48 +1,90 @@
-## Chapter 2: Environment Preparation and Local Execution
+# Chapter 2: Environment Preparation and Airflow Setup on AWS
 
-### 2.1 Launch Pre-configured AMI
+## 2.1 Overview
 
-Go to AWS Console > EC2 > Launch Instance
+In this chapter, you will:
+- Launch the pre-configured EC2 instance with Simulated Annealing and Apache Airflow already installed
+- Connect to the instance via SSH
+- Explore the provided project directory and test the optimizer
+- Start and access the Airflow web interface using Docker Compose
 
-Select the custom AMI named cloud-sa-optimizer-ami
+This prepares you for workflow automation in later chapters.
 
-Choose t2.micro (free tier eligible)
+---
 
-Create/use a key pair (download .pem)
+## 2.2 Launch Your EC2 Instance
 
-Allow SSH access (port 22) via security group
+Follow these steps to launch the cloud environment where your optimization and orchestration will run.
 
-Name the instance sa-optimizer
+### 🔹 Step 1: Log into AWS
+- Go to the [AWS Console](https://console.aws.amazon.com)
+- Choose the **N. Virginia (us-east-1)** region (or as instructed)
 
-### 2.2 Connect to the Instance
+### 🔹 Step 2: Launch an Instance
+- Go to **EC2 > Instances > Launch Instance**
+- Choose **AMI**: `cloud-sa-optimizer-ami` (provided by instructor or administrator)
+- Select **Instance type**: `t2.micro` (Free Tier eligible)
+- Use or create a **Key Pair** for SSH access
+- Use or create a **Security Group**:
+  - Inbound rule: Allow **port 22 (SSH)** from your IP
+  - (Optional) Allow **port 8080** if you want to access Airflow UI from browser
+- Name your instance `sa-optimizer`
+
+Click **Launch Instance**.
+
+---
+
+## 2.3 Connect via SSH
+
+Once your instance is running:
+
+```bash
+ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
+
+<Replace <your-ec2-public-ip> with the public IPv4 address from the EC2 dashboard.>
+
+## 2.4 Explore the Project Directory
+
+On the EC2 instance:
 
 ```
-ssh -i /path/to/key.pem ec2-user@<your-ec2-ip>
+cd ~cloud-batch-scheduling-sa
+ls sa_core/
 ```
 
-### 2.3 Verify Environment
+You should see Python files like:
 
-The AMI already includes:
+- main_SA.py
+- calculate_objective.py
+- generate_neighbor.py
+(etc.)
 
-- Python 3.10
-- Required Python libraries (<code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>openpyxl</code>)
-- Code base and test data in <code>/home/ec2-user/cloud-batch-scheduling-sa</code>
+You should also see:
+- requirements.txt
+- docker-compose.yaml (for Airflow)
+- dags/ folder (Airflow DAGs will go here)
 
-Navigate to the working directory and run:
+## 2.5 Run the Optimizer Manually
+
+Test that the SA code works:
 ```
-cd ~/cloud-batch-scheduling-sa  
 python3 sa_core/main_SA.py
 ```
 
-### 2.4 Task: Modify Initial Parameters
-
-Open main_SA.py and locate the following block:
+If successful, it will print logs and generate a file such as:
 ```
-Tmin = 1
-Tmax = 1000
-cooling_rate = 0.99
+SA_results123.xlsx
 ```
 
-Change Tmax to 500 and re-run the script. Observe changes in objective values and runtime in the output.
+Use <code>ls</code> to confirm:
+```
+ls *.xlsx
+```
 
-**Reflection Prompt**: What do you notice about the solution quality and runtime when Tmax is reduced?
+
+
+
+
+
+
+
