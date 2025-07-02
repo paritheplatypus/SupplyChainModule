@@ -40,7 +40,7 @@ Once your instance is running:
 
 ```bash
 ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
-
+````
 <Replace <your-ec2-public-ip> with the public IPv4 address from the EC2 dashboard.>
 
 ## 2.4 Explore the Project Directory
