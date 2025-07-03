@@ -1,4 +1,4 @@
-# Chapter 4: Hello World DAG – First Airflow Workflow (Revised)
+# Chapter 4: Hello World DAG – First Airflow Workflow
 
 ## 4.1 Overview
 
