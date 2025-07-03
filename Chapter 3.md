@@ -12,7 +12,7 @@ This chapter builds your understanding of what the SA script is doing before we 
 
 ## 3.2 Key Files and Folders
 
-Inside your project directory (`~/cloud-batch-scheduling-sa`), you'll find:
+Inside your project directory (`~/supply_chain_module`), you'll find:
 
 #### `sa_core/`
 Contains all core logic for the SA optimizer:
