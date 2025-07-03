@@ -19,14 +19,14 @@ Follow these steps to launch the cloud environment where your optimization and o
 - Choose the **N. Virginia (us-east-1)** region (or as instructed)
 
 ### Step 2: Launch an Instance
-- Go to **EC2 > Instances > Launch Instance**
-- Choose **AMI**: `cloud-sa-optimizer-ami` (provided by instructor or administrator)
+- Go to **EC2 > AMIs**
+- Choose **AMI**: `AirflowAMI`
 - Select **Instance type**: `t2.micro` (Free Tier eligible)
 - Use or create a **Key Pair** for SSH access
 - Use or create a **Security Group**:
   - Inbound rule: Allow **port 22 (SSH)** from your IP
   - (Optional) Allow **port 8080** if you want to access Airflow UI from browser
-- Name your instance `sa-optimizer`
+- Name your instance anything you'd like
 
 Click **Launch Instance**.
 
