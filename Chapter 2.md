@@ -14,11 +14,11 @@ This prepares you for workflow automation in later chapters.
 
 Follow these steps to launch the cloud environment where your optimization and orchestration will run.
 
-### 🔹 Step 1: Log into AWS
+### Step 1: Log into AWS
 - Go to the [AWS Console](https://console.aws.amazon.com)
 - Choose the **N. Virginia (us-east-1)** region (or as instructed)
 
-### 🔹 Step 2: Launch an Instance
+### Step 2: Launch an Instance
 - Go to **EC2 > Instances > Launch Instance**
 - Choose **AMI**: `cloud-sa-optimizer-ami` (provided by instructor or administrator)
 - Select **Instance type**: `t2.micro` (Free Tier eligible)
@@ -30,7 +30,7 @@ Follow these steps to launch the cloud environment where your optimization and o
 
 Click **Launch Instance**.
 
----
+
 
 ## 2.3 Connect via SSH
 
@@ -39,45 +39,44 @@ Once your instance is running:
 ```bash
 ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
 ````
-<Replace <your-ec2-public-ip> with the public IPv4 address from the EC2 dashboard.>
+> Replace <your-ec2-public-ip> with the public IPv4 address from the EC2 dashboard.
 
 ## 2.4 Explore the Project Directory
 
-On the EC2 instance:
+Navigate to the project folder:
 
 ```
-cd ~cloud-batch-scheduling-sa
-ls sa_core/
+cd ~/supply_chain_module
+ls
 ```
 
-You should see Python files like:
+You should see files like:
 
-- main_SA.py
-- calculate_objective.py
-- generate_neighbor.py
-(etc.)
+- <code>main_SA.py</code>
+- <code>generate_data.py</code>, <code>initial_solution.py</code>, etc.
+- Input Excel files (e.g., <code>results69.xlsx</code>)
 
-You should also see:
-- requirements.txt
-- docker-compose.yaml (for Airflow)
-- dags/ folder (Airflow DAGs will go here)
+## 2.5 Start the Airflow Services
 
-## 2.5 Run the Optimizer Manually
+Start the scheduler and webserver:
 
-Test that the SA code works:
 ```
-python3 sa_core/main_SA.py
+airflow scheduler &
+airflow webserver --port 8080 &
 ```
 
-If successful, it will print logs and generate a file such as:
+In your browser, go to:
+
 ```
-SA_results123.xlsx
+http://<your-ec2-public-ip>:8080
 ```
 
-Use <code>ls</code> to confirm:
-```
-ls *.xlsx
-```
+Log in using:
+
+Username: <code>admin</code>
+Password: <code>admin123</code>
+
+You are now ready to use the Airflow UI to trigger the optimizer.
 
 
 
