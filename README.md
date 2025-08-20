@@ -26,11 +26,11 @@ The goal is to minimize total operational cost.
 1. README.md
 - Explains the architecture and core Python scripts:
 - `generate_data.py`: Reads Excel → creates job/machine data
-- 'initial_solution.py': Builds a feasible starting schedule
-- 'calculate_objective.py': Computes total cost (production + lateness + rejection + unused capacity)
-- 'generate_neighbor.py': Generates new candidate solutions with feasibility checks
-- 'feasibility.py': Ensures constraints are respected
-- 'main_SA.py': The main driver for the SA loop
+- `initial_solution.py`: Builds a feasible starting schedule
+- `calculate_objective.py`: Computes total cost (production + lateness + rejection + unused capacity)
+- `generate_neighbor.py`: Generates new candidate solutions with feasibility checks
+- `feasibility.py`: Ensures constraints are respected
+- `main_SA.py`: The main driver for the SA loop
 
 2. Chapter 1: Overview & Getting Started
 - Introduces the problem (job scheduling in manufacturing).
