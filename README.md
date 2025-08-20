@@ -5,7 +5,7 @@ This module contains code authored by @parisa (Fatemah Pourdehghan Golneshini).
 ## Architecture Summary
 
 main_SA.py  
-│  
+ │  
 ├── generate_data.py           --> Reads Excel data → creates 'data' dictionary  
 ├── initial_solution.py        --> Creates an initial feasible solution  
 ├── calculate_objective.py     --> Evaluates the cost of a solution  
@@ -39,10 +39,10 @@ The goal is to minimize total operational cost.
 
 3. Chapter 2: Environment Setup
 
-1. Launch a pre-configured AWS EC2 instance (with Airflow + SA pre-installed).
-2. Connect via SSH.
-3. Explore project directory.
-4. Start Airflow web UI (via Docker Compose).
+- Launch a pre-configured AWS EC2 instance (with Airflow + SA pre-installed).
+- Connect via SSH.
+- Explore project directory.
+- Start Airflow web UI (via Docker Compose).
 > This sets up the cloud environment for automation.
 
 4. Chapter 3: Running the SA Scheduler
