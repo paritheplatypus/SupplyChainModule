@@ -1,4 +1,4 @@
-# Chapter 2: Environment Preparation and Airflow Setup on AWS
+# Chapter 2: Preparation
 
 ## 2.1 Overview
 
