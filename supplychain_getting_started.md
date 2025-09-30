@@ -1,4 +1,4 @@
-# Purpose of the Module
+# Purpose of the Lab
 
 In this module, you will learn how to deploy a Supply Chain Optimization module using Simulated Annealing (SA) and Q-learning-based adaptive operator selection on an Airflow-based Cloud DevOps platform.
 
@@ -16,8 +16,9 @@ You will automate the optimization pipeline to process input data (Excel files) 
 
 ---
 
-# References
+# Before you begin... Reference Links
 
+> add descriptions under each link
 - [Airflow](https://airflow.apache.org/) - Workflow orchestration platform
 - [Simulated Annealing](https://en.wikipedia.org/wiki/Simulated_annealing) - Metaheuristic optimization
 - [Q-learning](https://en.wikipedia.org/wiki/Q-learning) - Reinforcement Learning
@@ -42,3 +43,6 @@ You will automate the optimization pipeline to process input data (Excel files) 
 - Step 4: Build Airflow DAG for the optimization
 - Step 5: Run example optimization and analyze results
 - Step 6: Optional - Automate parameter tuning and experiment tracking
+
+> add medals and stuff here
+> remove the stuff before this (guideline... and add the actual guidelines instead)
