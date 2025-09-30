@@ -1,6 +1,6 @@
-# Chapter 1: Overview and Getting Started
+# Chapter 1: Overview
 
-## 1.1 Introduction
+## 1.1 Purpose of the Lab
 
 In this lab, you will learn how to solve a **real-world job scheduling problem** using a powerful optimization technique called **Simulated Annealing (SA)**. Imagine a factory with a set of 3D printers or CNC machines — you need to assign manufacturing jobs to those machines in the most efficient way possible.
 
@@ -18,7 +18,9 @@ To automate and scale this process, we will deploy our scheduling algorithm in t
 
 
 
-## 1.2 Learning Objectives
+## 1.2 Prerequisites
+
+> fill in prerequisites
 
 By the end of this module, you will:
 - Understand how Simulated Annealing can be applied to job scheduling
@@ -27,6 +29,11 @@ By the end of this module, you will:
 - Automate and monitor scheduling runs using Apache Airflow DAGs
 - Analyze output cost breakdown and compare scheduling strategies
 
+# References to guide lab work
+
+# Overview
+
+> rest is not needed
 
 
 ## 1.3 Problem Statement: Why Optimize Scheduling?
