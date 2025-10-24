@@ -6,3 +6,5 @@ The hands-on lab demonstrates how to implement and manage optimization problems 
 Learners will gain practical experience designing Airflow DAGs, parameterizing optimization algorithms, visualizing results, and interpreting convergence behavior — all in a reproducible, cloud-native setup using AWS EC2.
 
 _Time to complete: 3 hours_
+
+AMI ID: ami-0e6954ed5254369ec
