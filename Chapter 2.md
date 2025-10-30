@@ -1,87 +1,133 @@
-# Chapter 2: Preparation
+# Chapter 2 – Environment Setup on AWS EC2 (Ubuntu 22.04 LTS)
 
-## 2.1 Overview
+## Objective
+Set up Apache Airflow on an EC2 instance launched from the pre-configured **MCD-Module11-Ubuntu 22.04 AMI**.  
+You will perform all tasks directly in the **EC2 Instance Connect web terminal**—no SSH keys or local terminal setup are required.
 
-In this chapter, you will:
-- Launch the pre-configured EC2 instance with Simulated Annealing and Apache Airflow already installed
-- Connect to the instance via SSH
-- Explore the provided project directory and test the optimizer
-- Start and access the Airflow web interface using Docker Compose
+---
 
-This prepares you for workflow automation in later chapters.
+## 2.1 Launch the Instance
 
-## 2.2 Launch Your EC2 Instance
+1. Sign in to the AWS Management Console.  
+2. Navigate to **AMIs** and select  
+   **ApacheAirflowAMI**.  
+3. Click **Launch instance from AMI**.  
+4. Choose **t2.medium**.  
+5. Under **Network settings**, ensure inbound rules include:  
+   - **Port 22 (SSH)** – required for EC2 Instance Connect  
+   - **Port 8080 (Custom TCP)** – for Airflow Web UI  
+6. Leave storage and IAM role as default, then click **Launch instance**.
 
-Follow these steps to launch the cloud environment where your optimization and orchestration will run.
+When the instance is running:
+1. Go to **EC2 → Instances** and select your new instance.  
+2. Click **Connect** → choose **EC2 Instance Connect** (tab).  
+3. Click **Connect** again to open a browser-based terminal.  
 
-### Step 1: Log into AWS
-- Go to the [AWS Console](https://console.aws.amazon.com)
-- Choose the **N. Virginia (us-east-1)** region (or as instructed)
+You are now inside your Ubuntu environment.  
+A welcome message should appear:
 
-### Step 2: Launch an Instance
-- Go to **EC2 > AMIs**
-- Choose **AMI**: `AirflowAMI`
-- Select **Instance type**: `t2.micro` (Free Tier eligible)
-- Use or create a **Key Pair** for SSH access
-- Use or create a **Security Group**:
-  - Inbound rule: Allow **port 22 (SSH)** from your IP
-  - (Optional) Allow **port 8080** if you want to access Airflow UI from browser
-- Name your instance anything you'd like
+```
+Mizzou Cloud DevOps — Module 11 (Workflow Automation for Optimization with Airflow)
+```
 
-Click **Launch Instance**.
+This confirms that your instance was built from the correct AMI.
 
+---
 
+## 2.2 Activate Environment Variables
 
-## 2.3 Connect via SSH
-
-Once your instance is running:
+The AMI already includes a workspace and environment variable.  
+Verify it by running:
 
 ```bash
-ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
-````
-> Replace <your-ec2-public-ip> with the public IPv4 address from the EC2 dashboard.
-
-## 2.4 Explore the Project Directory
-
-Navigate to the project folder:
-
+echo $MODULE11_SCRATCH
 ```
-cd ~/supply_chain_module
-ls
+Expected output:
+```
+/opt/mcd/work
 ```
 
-You should see files like:
+If it matches, your environment is configured correctly.
 
-- <code>main_SA.py</code>
-- <code>generate_data.py</code>, <code>initial_solution.py</code>, etc.
-- Input Excel files (e.g., <code>results69.xlsx</code>)
+---
 
-## 2.5 Start the Airflow Services
+## 2.3 Create and Activate a Python Virtual Environment
 
-Start the scheduler and webserver:
-
-```
-airflow scheduler &
-airflow webserver --port 8080 &
+```bash
+python3 -m venv ~/mcd-env
+source ~/mcd-env/bin/activate
 ```
 
-In your browser, go to:
+*(You should see `(mcd-env)` appear in your prompt.)*
+
+---
+
+## 2.4 Install Apache Airflow
+
+```bash
+pip install --upgrade pip wheel
+pip install "apache-airflow==2.9.3" --constraint   "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.10.txt"
+```
+
+This installs Airflow inside your virtual environment.
+
+---
+
+## 2.5 Initialize Airflow and Create an Admin User
+
+```bash
+export AIRFLOW_HOME=$HOME/airflow
+airflow db init
+airflow users create --username admin --firstname Admin --lastname User   --role Admin --email admin@example.com --password admin
+```
+
+When the initialization completes, the Airflow database and default folders are created under `~/airflow`.
+
+---
+
+## 2.6 Start Airflow Services
+
+Use the pre-installed helper script to start both the webserver and scheduler.
+
+```bash
+module11-start-airflow.sh
+```
+
+This command launches:
+- **Airflow webserver** (on port 8080)  
+- **Airflow scheduler** (in background)  
+
+Wait ~30 seconds, then open the Airflow UI:
 
 ```
-http://<your-ec2-public-ip>:8080
+http://<EC2-Public-IP>:8080
 ```
 
-Log in using:
+Login credentials:
+```
+Username: admin
+Password: admin
+```
 
-Username: <code>admin</code>
-Password: <code>admin123</code>
+> *Tip:* If you close or disconnect the web terminal, Airflow will continue running in the background.  
+> To stop services later, use:
+> ```bash
+> module11-stop-airflow.sh
+> ```
 
-You are now ready to use the Airflow UI to trigger the optimizer.
+---
 
+## 2.7 Verify Installation
 
+Inside the web UI, confirm:
+- The **DAGs dashboard** loads without errors.  
+- The **“example_dags”** list appears (Airflow default examples).  
 
+If visible, your setup is complete.
 
+---
 
+## 2.8 Proceed to the Next Chapter
 
-
-
+You now have a working Airflow environment.  
+Continue to **Chapter 3 – Verifying Airflow Installation** to create and test your first DAG.
