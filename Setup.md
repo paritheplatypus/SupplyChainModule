@@ -52,7 +52,7 @@ airflow users create     --username alice     --firstname Alice     --lastname J
 ## 🌐 Step 5. Log in to Airflow
 1. Start the Airflow webserver (if not already running):
    ```bash
-   airflow webserver -p 8080
+   module11-start-airflow.sh
    ```
    ```
 3. Open your browser and navigate to:
