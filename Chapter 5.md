@@ -2,7 +2,29 @@
 
 The **Newsvendor** model captures a prototypical single‑period inventory decision: how much to order prior to uncertain demand. The decision balances the **underage cost** (lost margin or goodwill when demand exceeds stock) against the **overage cost** (holding or spoilage when inventory remains). Despite its simplicity, the model is foundational because it formalizes decision‑making under stochastic demand with asymmetric costs, offering a clear analytic solution and a lens through which more elaborate multi‑period and multi‑item models can be understood.
 
-Let \(Q\) denote the order quantity and \(D\) the random demand. For unit selling price \(p\), purchase cost \(c\), and salvage value \(v\) (with \(p>c\ge v\)), the marginal **underage cost** is \(c_u=p-c\) and the marginal **overage cost** is \(c_o=c-v\). The optimal policy satisfies the **critical fractile** condition \(F_D(Q^*)=\frac{c_u}{c_u+c_o}\), where \(F_D\) is the CDF of demand. Under Normal demand with mean \(\mu\) and standard deviation \(\sigma\), the optimal order is \(Q^*=\mu+z^*\sigma\) with \(z^*=\Phi^{-1}(c_u/(c_u+c_o))\). The elegance of this result belies practical complications: demand distributions are rarely known, costs can be time‑varying, and capacity or multi‑product interactions introduce coupling that invalidates the single‑item, single‑period assumptions.
+Let \( Q \) denote the order quantity and \( D \) the random demand.  
+For unit selling price \( p \), purchase cost \( c \), and salvage value \( v \) (with \( p > c \ge v \)),  
+the marginal **underage cost** is \( c_u = p - c \) and the marginal **overage cost** is \( c_o = c - v \).  
+
+The optimal policy satisfies the **critical fractile** condition:
+\[
+F_D(Q^*) = \frac{c_u}{c_u + c_o}
+\]
+where \( F_D \) is the cumulative distribution function (CDF) of demand.  
+
+Under Normal demand with mean \( \mu \) and standard deviation \( \sigma \),  
+the optimal order is:
+\[
+Q^* = \mu + z^* \sigma
+\]
+with
+\[
+z^* = \Phi^{-1}\!\left( \frac{c_u}{c_u + c_o} \right)
+\]
+
+The elegance of this result belies practical complications:  
+demand distributions are rarely known, costs can be time-varying,  
+and capacity or multi-product interactions introduce coupling that invalidates the single-item, single-period assumptions.
 
 This chapter uses the classical model to illustrate how analytic prescriptions and empirical calibration coexist in practice. We provide a small, auditable Python utility that computes \(Q^*\) under Normal demand and can be embedded in a pipeline for scenario analysis, sensitivity studies, or teaching demonstrations. Extensions—non‑parametric estimates of \(F_D\), multi‑period smoothing, and service‑level constraints—follow the same logic but require additional data and modeling assumptions.
 
