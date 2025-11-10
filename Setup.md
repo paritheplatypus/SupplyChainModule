@@ -54,7 +54,6 @@ airflow users create     --username alice     --firstname Alice     --lastname J
    ```bash
    module11-start-airflow.sh
    ```
-   ```
 3. Open your browser and navigate to:
    ```
    http://<your-ec2-public-dns>:8080
