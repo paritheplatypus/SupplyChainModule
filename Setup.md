@@ -9,13 +9,8 @@ Follow these steps carefully.
 1. Go to the **AWS Management Console** → **EC2 Dashboard** → **Instances**.  
 2. Locate your assigned instance.  
 3. If its **Instance state** shows **Stopped**, select it and click **Start instance**.  
-4. Wait for the state to change to **Running**.  
-5. Once running, click **Connect** and follow the SSH instructions.  
-   Example command (from your local terminal):
-   ```bash
-   ssh -i "your-key.pem" ubuntu@<your-ec2-public-dns>
-   ```
-
+4. Wait for the state to change to **Running**.
+   
 ---
 
 ## 🐍 Step 2. Activate the Python Virtual Environment
