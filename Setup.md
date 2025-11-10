@@ -54,9 +54,6 @@ airflow users create     --username alice     --firstname Alice     --lastname J
    ```bash
    airflow webserver -p 8080
    ```
-2. In a new terminal tab, start the scheduler:
-   ```bash
-   airflow scheduler
    ```
 3. Open your browser and navigate to:
    ```
@@ -68,15 +65,14 @@ airflow users create     --username alice     --firstname Alice     --lastname J
 
 ## ✅ Verification
 Once logged in:
-- You should see the **Airflow Dashboard** with a list of available DAGs (e.g., `hello_world`, `job_scheduling_sa`, `newsvendor_model`).
+- You should see the **Airflow Dashboard** with a list of available default DAGs.
 - You can now start the workflow experiments described in Chapters 3–5.
 
 ---
 
 **Note:** If you restart your EC2 instance later, you only need to:
-1. Start the instance again,  
-2. Reconnect via SSH,  
-3. Reactivate your virtual environment, and  
-4. Restart the Airflow webserver and scheduler.
+1. Start the instance again.
+2. Reactivate your virtual environment.
+3. Restart the Airflow server.
 
 You **do not** need to reinitialize the database or recreate the user unless it was deleted.
