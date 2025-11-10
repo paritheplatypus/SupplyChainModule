@@ -1,77 +1,61 @@
-# Chapter 5: Scaling Up – Multiple Jobs and Realistic Use Case
+# Chapter 5: The Newsvendor Model – Single‑Period Inventory Under Uncertainty
 
-## 5.1 Overview
+The **Newsvendor** model captures a prototypical single‑period inventory decision: how much to order prior to uncertain demand. The decision balances the **underage cost** (lost margin or goodwill when demand exceeds stock) against the **overage cost** (holding or spoilage when inventory remains). Despite its simplicity, the model is foundational because it formalizes decision‑making under stochastic demand with asymmetric costs, offering a clear analytic solution and a lens through which more elaborate multi‑period and multi‑item models can be understood.
 
-In this chapter, you will:
-- Modify the DAG to run the optimizer multiple times with different random seeds
-- Save output files with unique names
-- (Optional) Upload output to S3
-- Analyze and compare results
+Let \(Q\) denote the order quantity and \(D\) the random demand. For unit selling price \(p\), purchase cost \(c\), and salvage value \(v\) (with \(p>c\ge v\)), the marginal **underage cost** is \(c_u=p-c\) and the marginal **overage cost** is \(c_o=c-v\). The optimal policy satisfies the **critical fractile** condition \(F_D(Q^*)=\frac{c_u}{c_u+c_o}\), where \(F_D\) is the CDF of demand. Under Normal demand with mean \(\mu\) and standard deviation \(\sigma\), the optimal order is \(Q^*=\mu+z^*\sigma\) with \(z^*=\Phi^{-1}(c_u/(c_u+c_o))\). The elegance of this result belies practical complications: demand distributions are rarely known, costs can be time‑varying, and capacity or multi‑product interactions introduce coupling that invalidates the single‑item, single‑period assumptions.
 
-## 5.2 Update the DAG for Multiple Runs
+This chapter uses the classical model to illustrate how analytic prescriptions and empirical calibration coexist in practice. We provide a small, auditable Python utility that computes \(Q^*\) under Normal demand and can be embedded in a pipeline for scenario analysis, sensitivity studies, or teaching demonstrations. Extensions—non‑parametric estimates of \(F_D\), multi‑period smoothing, and service‑level constraints—follow the same logic but require additional data and modeling assumptions.
 
-Open the DAG:
-```
-nano ~/airflow/dags/supply_chain_sa_dag.py
-```
-Example structure:
-```
-for seed in [42, 99, 202]:
-    run_task = BashOperator(
-        task_id=f'run_optimizer_seed_{seed}',
-        bash_command=f'python3 /home/ec2-user/supply_chain_module/main_SA.py --seed {seed}'
-    )
-```
-Make sure `main_SA.py` accepts a `--seed` argument:
-```
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--seed', type=int, default=123)
-args = parser.parse_args()
-```
-## 5.3 Generate Unique Output Files
+## Create the Newsvendor DAG (no external script required)
+```bash
+DAGS_DIR="$(airflow config get-value core dags_folder 2>/dev/null || echo ${AIRFLOW_HOME:-$HOME/airflow}/dags)"
+tee "$DAGS_DIR/newsvendor_dag.py" >/dev/null <<'PY'
+from datetime import timedelta
+import os, json, pendulum
+from statistics import NormalDist
+from airflow import DAG
+from airflow.operators.python import PythonOperator
 
-Update your export function:
-```
-filename = f"SA_results_seed_{seed}.xlsx"
-export_SA_results(..., filename=filename)
-```
-## 5.4 (Optional) Upload to S3
+RESULTS_DIR = "/opt/airflow/results"
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
-If you want to upload results to S3:
-```
-upload_task = BashOperator(
-    task_id=f'upload_results_seed_{seed}',
-    bash_command=f'aws s3 cp /home/ec2-user/supply_chain_module/SA_results_seed_{seed}.xlsx s3://your-bucket/results/'
-)
-run_task >> upload_task
-```
-## 5.5 Analyze Results
+def compute_newsvendor(**_):
+    mu = float(os.environ.get("NV_MU", "100"))
+    sigma = float(os.environ.get("NV_SIGMA", "20"))
+    cu = float(os.environ.get("NV_CU", "5"))
+    co = float(os.environ.get("NV_CO", "2"))
 
-Example:
-```
-import pandas as pd
-for seed in [42, 99, 202]:
-    df = pd.read_excel(f'SA_results_seed_{seed}.xlsx', sheet_name='Best_Objective')
-    print(f"Seed {seed} Objective:", df.iloc[0,0])
-```
-## 5.6 Use Case: 3D Printing Job Scheduling
+    p = cu/(cu+co)
+    z = NormalDist().inv_cdf(p)
+    q_star = mu + z * sigma
 
-This approach could help:
+    result = {
+        "mu": mu, "sigma": sigma, "cu": cu, "co": co,
+        "critical_fractile": p, "z": z, "q_star": round(q_star, 2)
+    }
+    path = os.path.join(RESULTS_DIR, "newsvendor_result.json")
+    with open(path, "w") as f:
+        json.dump(result, f, indent=4)
+    print(f"Saved Newsvendor result to: {path}\n{json.dumps(result, indent=4)}")
 
-- Assign jobs across multiple machines
-- Reduce cost, delay, or material waste
-- Optimize and log results daily with Airflow
+default_args = {
+    "owner": "airflow",
+    "retries": 0,
+    "retry_delay": timedelta(minutes=1),
+}
 
-## 5.7 Cleanup
+with DAG(
+    dag_id="newsvendor_model",
+    start_date=pendulum.datetime(2024, 10, 1, tz="UTC"),
+    schedule=None,
+    catchup=False,
+    default_args=default_args,
+    tags=["chapter5", "inventory", "stochastic"],
+) as dag:
+    compute = PythonOperator(task_id="compute_newsvendor", python_callable=compute_newsvendor)
+PY
 
-When finished:
-- Stop Airflow (optional):
-```
-pkill airflow
-```
-- Terminate your EC2 instance if done
-- (Optional) Remove files from S3:
-```
-aws s3 rm s3://your-bucket/results/ --recursive
+airflow dags list | grep newsvendor_model || true
+airflow tasks test newsvendor_model compute_newsvendor 2024-10-01
+cat /opt/airflow/results/newsvendor_result.json
 ```
